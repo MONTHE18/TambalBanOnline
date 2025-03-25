@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+    <title>Tambal Ekspress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  </head>
+
+  <body>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        z-index: 99;
+        background-color: #fff;
+      }
+
+      .logo {
+        font-size: 2em;
+        user-select: none;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+      }
+
+      .links {
+        position: absolute;
+        right: 25vh;
+      }
+
+      .links a {
+        position: relative;
+        font-size: 1.1em;
+        color: black;
+        text-decoration: none;
+        font-weight: 500;
+        margin-left: 40px;
+      }
+
+      .links a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 3px;
+        background: black;
+        border-bottom: 5px;
+        transform: scaleX(0);
+        transition: transform 0.5s;
+      }
+
+      .links a:hover::after {
+        transform: scaleX(1);
+      }
+
+      .navbar .btnLogin-popup {
+        width: 130px;
+        height: 50px;
+        padding: 9px 25px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease 0s;
+      }
+
+      .navbar .btnLogin-popup:hover {
+        background-color: #f6a849;
+      }
+
+      .navbar .toggle_btn {
+        color: #333;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: none;
+      }
+
+      .dropdown_menu {
+        position: fixed;
+        right: 10px;
+        top: 85px;
+        height: 0;
+        width: 300px;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(15px);
+        border-radius: 10px;
+        overflow: hidden;
+        z-index: 99;
+        transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .dropdown_menu.open {
+        height: 240px;
+      }
+
+      .nav_menu li {
+        padding: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav_menu a {
+        position: relative;
+        font-size: 1.1em;
+        color: black;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .nav_menu a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 3px;
+        background: black;
+        border-bottom: 5px;
+        transform: scaleX(0);
+        transition: transform 0.5s;
+      }
+
+      .nav_menu a:hover::after {
+        transform: scaleX(1);
+      }
+
+      .dropdown_menu .btnLogin-popup {
+        width: 100%;
+        padding: 9px 25px;
+        position: absolute;
+        left: 0;
+        bottom: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50px;
+        text-decoration: none;
+        background-color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease 0s;
+      }
+
+      .dropdown_menu .btnLogin-popup:hover {
+        background-color: #f6a849;
+      }
+
+      @media (max-width: 992px) {
+        .links,
+        .navbar .btnLogin-popup {
+          display: none;
+        }
+
+        .navbar .toggle_btn {
+          display: block;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .dropdown_menu {
+          left: 2rem;
+          width: unset;
+        }
+      }
+
+      .headings {
+        font-size: 3rem;
+        text-align: center;
+        margin-top: 5%;
+      }
+
+      #Home {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #Home img {
+        width: 800px;
+        margin-top: 20vh;
+      }
+
+      #Home .btnOrder-popup {
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: 3.5px solid black;
+        outline: none;
+        border-radius: 100px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-left: 20px;
+        transition: 0.5s;
+      }
+
+      #Home .btnOrder-popup:hover {
+        background: #f6a849;
+        color: black;
+      }
+
+      @media screen and (max-width: 992px) {
+        #Home img {
+          width: 100%;
+          height: auto;
+          margin-bottom: 60px;
+        }
+      }
+
+      #Services {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0;
+        min-height: 100vh;
+        margin-top: 100px;
+      }
+
+      #Services .h2 {
+        margin-top: 100px;
+      }
+
+      .container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 100px 50px;
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0, 0.15);
+        padding: 100px 50px;
+      }
+
+      .container .card {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 350px;
+        height: 300px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.5);
+        transition: 0.5s;
+      }
+
+      .container .card:hover {
+        height: 400px;
+      }
+
+      .container .card .imgBox {
+        position: absolute;
+        top: 20px;
+        width: 300px;
+        height: 220px;
+        background: black;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: 0.5s;
+      }
+
+      .container .card:hover .imgBox {
+        top: -100px;
+        scale: 0.75;
+        box-sizing: 0 15px 45px rgba(0, 0, 0, 0.2);
+      }
+
+      .container .card .imgBox img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .container .card .content {
+        position: absolute;
+        top: 250px;
+        width: 100%;
+        padding: 0 30px;
+        height: 35px;
+        overflow: hidden;
+        text-align: center;
+        transition: 0.5s;
+      }
+
+      .container .card:hover .content {
+        top: 100px;
+        height: 250px;
+      }
+
+      .container .card .content h2 {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: black;
+      }
+
+      .container .card .content p {
+        color: black;
+      }
+
+      .btnOrder-popup {
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: 3.5px solid black;
+        outline: none;
+        border-radius: 100px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 500;
+        transition: 0.5s;
+      }
+
+      .btnOrder-popup:hover {
+        background: #f6a849;
+        color: black;
+      }
+
+      @media screen and (max-width: 992px) {
+        #Services {
+          margin-top: 150px;
+        }
+      }
+
+      #About {
+        margin-top: -80px;
+        margin-bottom: 50px;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content img {
+        height: auto;
+        width: 600px;
+        max-width: 100%;
+      }
+
+      .text {
+        width: 550px;
+        max-width: 100%;
+        padding: 0 10px;
+      }
+
+      .content {
+        width: 1280px;
+        max-width: 95%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .text h2 {
+        margin-top: 30px;
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+
+      .text p {
+        font-size: 18px;
+        line-height: 28px;
+        text-align: justify;
+        letter-spacing: 1px;
+        margin-bottom: 45px;
+      }
+
+      @media screen and (max-width: 992px) {
+        #About {
+          width: 100%;
+          height: auto;
+          padding: 70px 0px;
+        }
+      }
+
+      @media screen and (max-width: 992px) {
+        #About .content img {
+          margin-bottom: 60px;
+        }
+
+        .text h2 {
+          font-size: 40px;
+          margin-bottom: 25px;
+        }
+      }
+
+      #Contact {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .footer {
+        background-color: #ffe0c2;
+        position: static;
+        bottom: 0;
+        box-sizing: border-box;
+        width: 100%;
+        text-align: left;
+        font: bold 16px sans-serif;
+        padding: 70px;
+      }
+
+      .footer .footer-left,
+      .footer .footer-center,
+      .footer .footer-right {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .footer .footer-left {
+        width: 30%;
+      }
+
+      .footer h3 {
+        color: black;
+        margin: 0;
+        padding-bottom: 20px;
+        font-family: Georgia, 'Time New Roman', Times, serif;
+      }
+
+      .footer .footer-left img {
+        width: 25%;
+        vertical-align: middle;
+      }
+
+      .footer .footer-left .credit-cards {
+        width: 300%;
+      }
+
+      .footer .footer-copyright {
+        color: black;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+        padding-top: 10%;
+      }
+
+      .footer .footer-center {
+        width: 30%;
+      }
+
+      .footer .footer-center i {
+        background-color: #33383b;
+        color: #ffffff;
+        font-size: 25px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 42px;
+        margin: 10px 15px;
+        vertical-align: middle;
+      }
+
+      .footer .footer-center i.fa-envelope {
+        font-size: 17px;
+        line-height: 38px;
+      }
+
+      .footer .footer-center i.fa-clock-o {
+        line-height: 38px;
+      }
+
+      .footer .footer-center p {
+        display: inline-block;
+        color: black;
+        vertical-align: middle;
+        margin: 0px;
+      }
+
+      .footer .footer-center p span {
+        display: block;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 2;
+      }
+
+      .footer .footer-right {
+        width: 30%;
+      }
+
+      .footer .footer-about {
+        line-height: 20px;
+        color: black;
+        font-size: 13px;
+        font-weight: normal;
+        margin: 0px;
+      }
+
+      .footer .footer-about span {
+        display: block;
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .footer .footer-media {
+        margin-top: 25px;
+      }
+
+      .footer .footer-media a {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        background-color: #33383b;
+        border-radius: 20%;
+        font-size: 20px;
+        color: #ffffff;
+        text-align: center;
+        line-height: 50px;
+        margin-right: 3px;
+        margin-bottom: 5px;
+      }
+
+      .footer .footer-media a:hover {
+        background-color: #f6a849;
+      }
+
+      @media screen and (max-height: 992px) {
+        .footer {
+          width: 100%;
+          height: auto;
+          position: static;
+        }
+
+        .header {
+          padding-top: 40px;
+        }
+      }
+
+      @media screen and (max-width: 992px) {
+        .footer .footer-center,
+        .footer .footer-right {
+          width: 90%;
+          height: auto;
+          margin-bottom: 40px;
+          text-align: left;
+        }
+
+        .footer .footer-left img {
+          width: 110%;
+          height: auto;
+        }
+
+        .footer .footer-copyright {
+          width: 300%;
+          height: auto;
+          margin-bottom: 40px;
+          text-align: left;
+        }
+
+        .footer .footer-center i {
+          margin-left: 10px;
+        }
+      }
+    </style>
+
+    <header>
+      <div class="navbar">
+        <a href="#" class="logo">TAMBAL EKSPRESS</a>
+        <nav class="links">
+          <a href="#Home">Home</a>
+          <a href="#Services">Services</a>
+          <a href="#About">About</a>
+          <a href="#Contact">Contact</a>
+        </nav>
+        <a href="register.html"><button class="btnLogin-popup">Get Started</button></a>
+        <div class="toggle_btn">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+
+      <div class="dropdown_menu">
+        <nav class="nav_menu">
+          <li><a href="#Home">Home</a></li>
+          <li><a href="#Services">Services</a></li>
+          <li><a href="#About">About</a></li>
+          <li><a href="#Contact">Contact</a></li>
+        </nav>
+        <a href="register.html" class="btnLogin-popup">Get Started</a>
+      </div>
+    </header>
+
+    <section id="Home">
+      <img src="image/background.jpg" alt="" />
+      <a href="order.html"><button class="btnOrder-popup">Order Here</button></a>
+    </section>
+
+    <section id="Services">
+      <h1 class="headings">SERVICES</h1>
+      <h2>What Is Your Problem?</h2>
+      <div class="container">
+        <div class="card">
+          <div class="imgBox">
+            <img src="image/ban bocor.jpg" alt="" />
+          </div>
+          <div class="content">
+            <h2>Ban Bocor</h2>
+            <p>Anda mengalami masalah ban bocor ?</p>
+            <a href="order.html"><button class="btnOrder-popup">Order Here</button></a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBox">
+            <img src="image/dorong_motor.jpg" alt="" />
+          </div>
+          <div class="content">
+            <h2>Mogok</h2>
+            <p>Anda mengalami masalah mogok ?</p>
+            <a href="order.html"><button class="btnOrder-popup">Order Here</button></a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBox">
+            <img src="image/rantai_lepas.jpg" alt="" />
+          </div>
+          <div class="content">
+            <h2>Rantai Lepas</h2>
+            <p>Anda mengalami masalah rantai lepas ?</p>
+            <a href="order.html"><button class="btnOrder-popup">Order Here</button></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="About">
+      <h1 class="headings">ABOUT US</h1>
+      <div class="content">
+        <img src="image/background.jpg" alt="" />
+        <div class="text">
+          <h2>Jasa Service & Tambal Ban Panggilan</h2>
+          <p>
+            Tambal Ekspress adalah penyedia layanan tambal ban/service motor panggilan, apabila pengendara motor mengalami masalah dimanapun dan kapanpun, khususnya pada malam hari. Fungsi utama website adalah memberikan pelayanan kepada
+            pengguna kendaraan bermotor khususnya sepeda motor yang mengalami masalah pada malam hari seperti ban bocor/kempes, motor mogok atau rusak di jalan.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="Contact">
+      <h1 class="headings">CONTACT</h1>
+      <footer class="footer">
+        <div class="footer-left">
+          <div class="credit-cards">
+            <img src="<?= base_url() ?>assets/gambar/Logo-01.png" alt="" />
+          </div>
+          <p class="footer-copyright">© 2023 Tambal Ekspress. all right reserved</p>
+        </div>
+        <div class="footer-center">
+          <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span> Banguntapan,</span> Yogyakarta, Indonesia</p>
+          </div>
+          <div>
+            <i class="fa fa-phone"></i>
+            <p>+62 812 3456 7890</p>
+          </div>
+          <div>
+            <i class="fa fa-envelope"></i>
+            <p>tambalekspress@gmail.com</p>
+          </div>
+          <div>
+            <i class="fa fa-clock-o"></i>
+            <p>Every day all the time</p>
+          </div>
+        </div>
+        <div class="footer-right">
+          <p class="footer-about">
+            <span>About Us</span>
+            Tambal Ekspress adalah penyedia layanan tambal ban/service motor panggilan, apabila pengendara motor mengalami masalah dimanapun dan kapanpun, khususnya pada malam hari.
+          </p>
+          <div class="footer-media">
+            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
+            <a href="https://id.linkedin.com/"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.twitter.com/"><i class="fa fa-twitter"></i></a>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <script>
+      const toggleBtn = document.querySelector('.toggle_btn');
+      const toggleBtnIcon = document.querySelector('.toggle_btn i');
+      const dropdownMenu = document.querySelector('.dropdown_menu');
+
+      toggleBtn.onclick = function () {
+        dropdownMenu.classList.toggle('open');
+        const isOpen = dropdownMenu.classList.contains('open');
+
+        toggleBtnIcon.classList = isOpen ? 'fa fa-times' : 'fa fa-bars';
+      };
+    </script>
+  </body>
+</html>
